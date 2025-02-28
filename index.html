@@ -1,0 +1,75 @@
+https://www.viber.com/activate_secondary/?u=e56e2e4717a1015397c3da03d66b5b693518b320&k=snRBMgWmO-jsltZYGe-jKcSMgVy4zeUUpsFr8GCgqxY.&r=1&v=2<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .quiz-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Math Quiz</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+        <p id="result"></p>
+        <button onclick="generateQuestion()">Next Question</button>
+    </div>
+
+    <script>
+        function generateQuestion() {
+            let num1 = Math.floor(Math.random() * 20) + 1;
+            let num2 = Math.floor(Math.random() * 20) + 1;
+            let operations = ['+', '-', '*', '/'];
+            let operation = operations[Math.floor(Math.random() * operations.length)];
+            let question, answer;
+
+            switch (operation) {
+                case '+': answer = num1 + num2; break;
+                case '-': answer = num1 - num2; break;
+                case '*': answer = num1 * num2; break;
+                case '/': answer = (num1 / num2).toFixed(2); break;
+            }
+
+            document.getElementById("question").innerText = `What is ${num1} ${operation} ${num2}?`;
+            let optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = '';
+            let correctIndex = Math.floor(Math.random() * 4);
+            
+            for (let i = 0; i < 4; i++) {
+                let option = document.createElement("button");
+                if (i === correctIndex) {
+                    option.innerText = answer;
+                    option.onclick = () => document.getElementById("result").innerText = "Correct!";
+                } else {
+                    let wrongAnswer = answer + Math.floor(Math.random() * 10) - 5;
+                    if (wrongAnswer == answer) wrongAnswer++;
+                    option.innerText = wrongAnswer;
+                    option.onclick = () => document.getElementById("result").innerText = "Wrong, try again!";
+                }
+                optionsDiv.appendChild(option);
+            }
+        }
+
+        generateQuestion();
+    </script>
+</body>
+</html>
